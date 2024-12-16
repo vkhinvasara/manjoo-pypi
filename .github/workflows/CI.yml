@@ -55,11 +55,12 @@ jobs:
             target: x64
           - runner: windows-latest
             target: x86
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: 3.x
+          python-version: ${{ matrix.python-version }}
           architecture: ${{ matrix.platform.target }}
       - name: Build wheels
         uses: PyO3/maturin-action@v1
@@ -70,31 +71,34 @@ jobs:
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: wheels-windows-${{ matrix.platform.target }}
+          name: wheels-windows-${{ matrix.platform.target }}-${{ matrix.python-version }}
           path: dist
-
+          
   macos:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: 3.x
-      - name: Build wheels
-        uses: PyO3/maturin-action@v1
-        with:
-          target: ${{ matrix.os }}
-          args: --release --out dist --find-interpreter
-          sccache: 'true'
-      - name: Upload wheels
-        uses: actions/upload-artifact@v4
-        with:
-          name: wheels-macos-${{ matrix.os }}
-          path: dist
-
+      runs-on: ${{ matrix.os }}
+      strategy:
+        matrix:
+          os: [macos-latest]
+          python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+          target: 
+            - x86_64
+            - arm64
+      steps:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-python@v5
+          with:
+            python-version: ${{ matrix.python-version }}
+        - name: Build wheels
+          uses: PyO3/maturin-action@v1
+          with:
+            target: ${{ matrix.target }}
+            args: --release --out dist --find-interpreter
+            sccache: 'true'
+        - name: Upload wheels
+          uses: actions/upload-artifact@v4
+          with:
+            name: wheels-macos-${{ matrix.os }}-${{ matrix.python-version }}-${{ matrix.target }}
+            path: dist
   sdist:
     runs-on: ubuntu-latest
     steps:
