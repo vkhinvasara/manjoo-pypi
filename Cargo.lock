@@ -525,19 +525,9 @@ dependencies = [
 ]
 
 [[package]]
-name = "manjoo"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1f19fce8b2ba1d24088fd546f24d1dd576a4d7d78e53d133011f9ff6f2537164"
-dependencies = [
- "ratatui",
-]
-
-[[package]]
 name = "manjoo-pypi"
-version = "0.31.2"
+version = "0.4.0"
 dependencies = [
- "manjoo",
  "pyo3",
  "ratatui",
 ]
