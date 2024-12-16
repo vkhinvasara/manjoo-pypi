@@ -74,16 +74,10 @@ jobs:
           path: dist
 
   macos:
-    runs-on: ${{ matrix.platform.runner }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        platform:
-          - runner: macos-latest
-            target: aarch64
-          - runner: macos-12
-            target: x86_64
-          - runner: macos-14
-            target: aarch64-apple-darwin
+        os: [macos-latest]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -92,13 +86,13 @@ jobs:
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
-          target: ${{ matrix.platform.target }}
+          target: ${{ matrix.os }}
           args: --release --out dist --find-interpreter
           sccache: 'true'
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: wheels-macos-${{ matrix.platform.target }}
+          name: wheels-macos-${{ matrix.os }}
           path: dist
 
   sdist:
