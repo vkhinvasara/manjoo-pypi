@@ -73,7 +73,7 @@ jobs:
         with:
           name: wheels-windows-${{ matrix.platform.target }}-${{ matrix.python-version }}
           path: dist
-          
+
   macos:
       runs-on: ${{ matrix.os }}
       strategy:
@@ -82,7 +82,7 @@ jobs:
           python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
           target: 
             - x86_64
-            - arm64
+            - aarch64
       steps:
         - uses: actions/checkout@v4
         - uses: actions/setup-python@v5
