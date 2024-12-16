@@ -80,6 +80,8 @@ jobs:
         platform:
           - runner: macos-14
             target: aarch64
+          - runner: macos-17
+            target: aarch64-apple-darwin
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
