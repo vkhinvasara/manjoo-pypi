@@ -29,7 +29,7 @@ This animation showcases a playful guinea pig running towards a tomato and inter
 Once installed, simply run the following command to experience the animation:
 
 ```bash
-python -m manjoo
+manjoo run
 ```
 
 Enjoy a moment of joy and remembrance with this lively animation.
